@@ -7,6 +7,9 @@ env:
     ECR_REPO_BACKEND: 026090550003.dkr.ecr.us-east-1.amazonaws.com/app-tier
 
 phases:
+  install:
+    runtime-versions:
+      docker: 20
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -21,8 +24,10 @@ phases:
       - echo Push Docker images...
       - docker push $ECR_REPO_WEB:latest
       - docker push $ECR_REPO_BACKEND:latest
+      - echo Copying Kubernetes manifests for deployment...
+      - mkdir -p output/k8s
+      - cp k8s/*.yaml output/k8s/
 
 artifacts:
   files:
-    - k8s/*.yaml
-  
+    - output/k8s/*.yaml

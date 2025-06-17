@@ -21,3 +21,8 @@ phases:
       - echo Push Docker images...
       - docker push $ECR_REPO_WEB:latest
       - docker push $ECR_REPO_BACKEND:latest
+
+artifacts:
+  files:
+    - k8s/*.yaml
+  
